@@ -4,12 +4,12 @@ from src.Numbers.Numbers import extensiveNumbers
 
 
 def create_action() -> Action:
-    action: Action = Action("SelectOption", ["select", "choose"], callback, parse_callback_arguments_from_transcript)
+    action: Action = Action("SelectOption", ["escolher", "selecionar", "bloquear"], callback, parse_callback_arguments_from_transcript)
     return action
 
 
 def callback(answer: str):
-    print("Selected option {}".format(answer))
+    print("Escolheu a opção {}".format(answer))
 
 
 def parse_callback_arguments_from_transcript(transcript: str):
