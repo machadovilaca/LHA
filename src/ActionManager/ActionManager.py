@@ -1,8 +1,8 @@
 from typing import List
 
-from Action import Action
-from ActionExecutor import ActionExecutor
-from ActionCalculator import ActionCalculator
+from src.ActionManager.Action import Action
+from src.ActionManager.ActionExecutor import ActionExecutor
+from src.ActionManager.ActionCalculator import ActionCalculator
 
 
 class ActionManager:
@@ -12,7 +12,9 @@ class ActionManager:
         self.actions = actions
 
     def select_and_execute_action(self, transcript):
-        #action = self.actions[0]  # select_action_to_execute(t)    
         action = ActionCalculator(self.actions).select_action_to_execute(transcript)
+        if action is None:
+            print("Não consigo executar a ação pedida.")
+            return
         executor = ActionExecutor(action, transcript)
         executor.execute_action()
