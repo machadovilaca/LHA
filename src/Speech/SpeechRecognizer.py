@@ -15,7 +15,16 @@ class SpeechRecognizer:
         self.sample_rate = sample_rate
         self.chunk_size = chunk_size
 
-    def get_speech(self):
+        self.verify_microphones()
+
+    def verify_microphones(self):
+        mic_list = speech_recognition.Microphone.list_microphone_names()
+        if len(mic_list) <= self.device_index:
+            raise ValueError(
+                "Can't use microphone, available options are {}, set env variable MICRO:(index)".format(mic_list)
+            )
+
+    def parse_voice_input(self):
         with speech_recognition.Microphone(
                 device_index=self.device_index, sample_rate=self.sample_rate,
                 chunk_size=self.chunk_size) as source:
@@ -32,6 +41,8 @@ class SpeechRecognizer:
 
             except speech_recognition.UnknownValueError as e:
                 logging.error(e)
+                return ""
 
             except speech_recognition.RequestError as e:
                 logging.error(e)
+                return ""

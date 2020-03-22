@@ -2,8 +2,8 @@ import logging
 from typing import List
 
 from src.ActionManager.Action import Action
-from src.ActionManager.ActionExecutor import ActionExecutor
 from src.ActionManager.ActionCalculator import ActionCalculator
+from src.ActionManager.ActionExecutor import ActionExecutor
 
 
 class ActionManager:
