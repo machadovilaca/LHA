@@ -1,10 +1,12 @@
 import re
+
 from src.ActionManager.Action import Action
 from src.Numbers.Numbers import extensiveNumbers
 
 
 def create_action() -> Action:
-    action: Action = Action("SelectOption", ["escolher", "selecionar", "bloquear"], callback, parse_callback_arguments_from_transcript)
+    action: Action = Action("SelectOption", ["escolher", "selecionar", "bloquear"], callback,
+                            parse_callback_arguments_from_transcript)
     return action
 
 

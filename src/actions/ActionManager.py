@@ -1,6 +1,7 @@
 from typing import List
-from src.actions.Action import Action
-from src.actions.ActionExecutor import ActionExecutor
+
+from src.Actions.Action import Action
+from src.Actions.ActionExecutor import ActionExecutor
 
 
 class ActionManager:
