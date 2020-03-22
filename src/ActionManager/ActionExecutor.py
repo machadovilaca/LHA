@@ -1,4 +1,4 @@
-from src.Actions.Action import Action
+from src.ActionManager.Action import Action
 
 
 class ActionExecutor:
@@ -10,9 +10,5 @@ class ActionExecutor:
         self.transcript = transcript
 
     def execute_action(self):
-        args: list = self.__parse_callback_arguments_from_transcript()
+        args: list = self.action.parse_callback_arguments_from_transcript(self.transcript)
         self.action.callback(*args)
-
-    @staticmethod
-    def __parse_callback_arguments_from_transcript() -> list:
-        return ["1", "Maybe"]
