@@ -1,8 +1,9 @@
+import logging
 from typing import List
 
 from src.ActionManager.Action import Action
-from src.ActionManager.ActionExecutor import ActionExecutor
 from src.ActionManager.ActionCalculator import ActionCalculator
+from src.ActionManager.ActionExecutor import ActionExecutor
 
 
 class ActionManager:
@@ -14,7 +15,7 @@ class ActionManager:
     def select_and_execute_action(self, transcript):
         action = ActionCalculator(self.actions).select_action_to_execute(transcript)
         if action is None:
-            print("Não consigo executar a ação pedida.")
+            logging.error("Não consigo executar a ação pedida.")
             return
         executor = ActionExecutor(action, transcript)
         executor.execute_action()

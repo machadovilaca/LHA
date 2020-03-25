@@ -1,3 +1,5 @@
+import logging
+
 from src.ActionManager.Action import Action
 
 
@@ -10,5 +12,9 @@ class ActionExecutor:
         self.transcript = transcript
 
     def execute_action(self):
-        args: list = self.action.parse_callback_arguments_from_transcript(self.transcript)
-        self.action.callback(*args)
+        try:
+            args: list = self.action.parse_callback_arguments_from_transcript(self.transcript)
+            self.action.callback(*args)
+
+        except ValueError:
+            logging.error("Erro no processo dos argumentos")
