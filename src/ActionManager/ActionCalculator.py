@@ -11,7 +11,7 @@ class ActionCalculator:
     model: TfidfVectorizer
     threshold: float
 
-    def __init__(self, actions: List[Action], threshold: float = 0.5):
+    def __init__(self, actions: List[Action], threshold: float = 0.4):
         self.actions = actions
         self.model = TfidfVectorizer()
         self.threshold = threshold
@@ -29,14 +29,9 @@ class ActionCalculator:
         train = self.train_model(self.get_all_tags())
         test = self.model.transform([transcript.lower()])
 
-        all_tags = [a.tags for a in self.actions]
-        data = [val for sublist in all_tags for val in sublist]
-
         similarities = cosine_similarity(train, test)
         closest_action = similarities.argsort(axis=None)[-1]
         if similarities[closest_action] >= self.threshold:
-            s = data[closest_action]
-            act = [a for a in self.actions if s in a.tags]
-            return act[0]
+            return self.actions[closest_action]
         else:
             return None

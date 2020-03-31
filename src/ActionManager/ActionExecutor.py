@@ -13,7 +13,9 @@ class ActionExecutor:
 
     def execute_action(self):
         try:
-            args: list = self.action.parse_callback_arguments_from_transcript(self.transcript)
+            args = None
+            if self.action.parse_callback_arguments_from_transcript is not None:
+                args: list = self.action.parse_callback_arguments_from_transcript(self.transcript)
             self.action.callback(*args)
 
         except ValueError:
