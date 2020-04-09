@@ -1,6 +1,4 @@
-import logging
-
-from src.ActionManager.Action import Action
+from src.Actions.Action import Action
 
 
 class ActionExecutor:
@@ -12,11 +10,17 @@ class ActionExecutor:
         self.transcript = transcript
 
     def execute_action(self):
-        try:
-            args = None
-            if self.action.parse_callback_arguments_from_transcript is not None:
-                args: list = self.action.parse_callback_arguments_from_transcript(self.transcript)
-            self.action.callback(*args)
+        request_body = {}
 
-        except ValueError:
-            logging.error("Erro no processo dos argumentos")
+        if self.action.callback_arguments_parser is not None:
+            args_names: list = self.action.callback.arguments
+            args_values: list = self.action.callback_arguments_parser.parse(self.transcript)
+
+            for i in range(len(args_names)):
+                request_body[args_names[i]] = args_values[i]
+
+        print("{} request to {} with body {}".format(
+            self.action.callback.request,
+            self.action.callback.url,
+            request_body
+        ))

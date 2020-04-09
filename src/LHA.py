@@ -1,15 +1,18 @@
 import logging
 import os
+from typing import List
 
 from src.ActionManager.ActionManager import ActionManager
-from src.Actions.Actions import get_actions
+from src.Actions.Action import Action
+from src.Actions.Actions import Actions
 from src.Speech.SpeechRecognizer import SpeechRecognizer
 
 logging_format = '%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s'
 logging.basicConfig(level=logging.DEBUG, format=logging_format)
 
 if __name__ == "__main__":
-    action_manager: ActionManager = ActionManager(get_actions())
+    actions: List[Action] = Actions().get_actions()
+    action_manager: ActionManager = ActionManager(actions)
 
     try:
         speech_recognizer = SpeechRecognizer(device_index=int(os.getenv('MICRO', '0')))
@@ -18,4 +21,3 @@ if __name__ == "__main__":
     except ValueError as e:
         logging.error(e)
         exit(1)
-

@@ -1,0 +1,9 @@
+tags:
+  - próxima
+  - pergunta
+  - seguinte
+  - questão
+
+callback:
+  request: GET
+  url: http://localhost:3000/answer/next

@@ -1,9 +1,9 @@
 import logging
 from typing import List
 
-from src.ActionManager.Action import Action
 from src.ActionManager.ActionCalculator import ActionCalculator
 from src.ActionManager.ActionExecutor import ActionExecutor
+from src.Actions.Action import Action
 
 
 class ActionManager:
@@ -18,7 +18,7 @@ class ActionManager:
         if action is None:
             logging.error("Não consigo executar a ação pedida.")
             return
-        
+
         logging.debug("Ação Detetada: {}".format(action.name))
         executor = ActionExecutor(action, transcript)
         executor.execute_action()
