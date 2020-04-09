@@ -22,6 +22,3 @@ class Actions:
         observer = Observer()
         observer.schedule(ActionChangeHandler(self.path, self.actions), "Actions/Catalog")
         observer.start()
-
-    def get_actions(self):
-        return list(self.actions.values())

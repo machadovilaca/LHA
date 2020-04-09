@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import Dict
 
 from src.ActionManager.ActionCalculator import ActionCalculator
 from src.ActionManager.ActionExecutor import ActionExecutor
@@ -7,9 +7,9 @@ from src.Actions.Action import Action
 
 
 class ActionManager:
-    actions: List[Action]
+    actions: Dict[str, Action]
 
-    def __init__(self, actions: List[Action]):
+    def __init__(self, actions: Dict[str, Action]):
         self.actions = actions
 
     def select_and_execute_action(self, transcript):

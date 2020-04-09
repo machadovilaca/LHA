@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import List
+from typing import Dict
 
 from src.ActionManager.ActionManager import ActionManager
 from src.Actions.Action import Action
@@ -11,7 +11,7 @@ logging_format = '%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)
 logging.basicConfig(level=logging.DEBUG, format=logging_format)
 
 if __name__ == "__main__":
-    actions: List[Action] = Actions().get_actions()
+    actions: Dict[str, Action] = Actions().actions
     action_manager: ActionManager = ActionManager(actions)
 
     try:

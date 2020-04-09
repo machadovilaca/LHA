@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import Dict
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -8,11 +8,11 @@ from src.Actions.Action import Action
 
 
 class ActionCalculator:
-    actions: List[Action]
+    actions: Dict[str, Action]
     model: TfidfVectorizer
     threshold: float
 
-    def __init__(self, actions: List[Action], threshold: float = 0.4):
+    def __init__(self, actions: Dict[str, Action], threshold: float = 0.4):
         self.actions = actions
         self.model = TfidfVectorizer()
         self.threshold = threshold
@@ -22,7 +22,7 @@ class ActionCalculator:
 
     def get_all_tags(self):
         tags_list = []
-        for action in self.actions:
+        for action in list(self.actions.values()):
             tags_list.append(action.tags)
         return [' '.join(tag) for tag in tags_list]
 
@@ -37,6 +37,6 @@ class ActionCalculator:
                       .format(similarities[closest_action][0], self.threshold))
 
         if similarities[closest_action] >= self.threshold:
-            return self.actions[closest_action]
+            return list(self.actions.values())[closest_action]
         else:
             return None
