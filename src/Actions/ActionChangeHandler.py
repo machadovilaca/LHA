@@ -15,7 +15,9 @@ class ActionChangeHandler:
 
     def new_action(self, event, action_name):
         action: Action = FileToActionParser.parse_file(event.src_path, action_name)
-        self.actions[action.name] = action
+
+        if action is not None:
+            self.actions[action.name] = action
 
     def delete_action(self, action_name: str):
         self.actions.pop(action_name, None)

@@ -10,9 +10,18 @@ from src.Actions.Action import Action
 from src.Actions.ActionCallback import ActionCallback
 
 
-def string_to_callable(parser: str):
-    mod: RuntimeModule = RuntimeModule.from_string('parser', parser)
+def validate_argument_parser(parser):
+    valid_func_def_1 = re.compile(r'def( *)parse( *)\(( *)transcript( *):( *)str( *)\)( *):')
+    valid_func_def_2 = re.compile(r'def( *)parse( *)\(( *)transcript( *)\)( *):')
 
+    if not valid_func_def_1.search(parser) and not valid_func_def_2.search(parser):
+        raise ValueError('function "def parser(transcript)" not defined')
+
+
+def argument_parser_string_to_callable(parser: str):
+    validate_argument_parser(parser)
+
+    mod: RuntimeModule = RuntimeModule.from_string('parser', parser)
     return mod
 
 
@@ -22,7 +31,7 @@ def get_argument_parser_from_yaml(data):
     if parser is None:
         return None
 
-    return string_to_callable(parser)
+    return argument_parser_string_to_callable(parser)
 
 
 def get_callback_from_yaml(data):
@@ -33,12 +42,18 @@ def get_callback_from_yaml(data):
 
 
 def yaml_to_action(data, action_name: str):
-    return Action(
-        action_name,
-        data['tags'],
-        get_callback_from_yaml(data),
-        get_argument_parser_from_yaml(data)
-    )
+    try:
+        action = Action(
+            action_name,
+            data['tags'],
+            get_callback_from_yaml(data),
+            get_argument_parser_from_yaml(data)
+        )
+        logging.debug("Action ({}) carregada com sucesso".format(action.name))
+        return action
+    except (IndentationError, Exception) as e:
+        logging.error("Action ({}) contém erros: {}".format(action_name, str(e)))
+        return None
 
 
 def get_action_name(directory: str, filename: str):
@@ -55,8 +70,6 @@ def parse_file(filename: str, action_name: str):
         data = yaml.safe_load(stream)
         action = yaml_to_action(data, action_name)
 
-    logging.debug("Action carregada com sucesso: {}".format(action.name))
-
     return action
 
 
@@ -66,6 +79,9 @@ def parse_dir(directory: str):
 
     for filename in filenames:
         action_name = get_action_name(directory, filename)
-        actions[action_name] = parse_file(filename, action_name)
+        action = parse_file(filename, action_name)
+
+        if action is not None:
+            actions[action_name] = action
 
     return actions
