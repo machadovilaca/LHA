@@ -1,0 +1,8 @@
+tags:
+  - anterior
+  - pergunta
+  - questão
+
+callback:
+  request: GET
+  url: http://localhost:3000/answer/previous
