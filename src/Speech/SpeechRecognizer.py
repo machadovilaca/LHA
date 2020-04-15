@@ -1,6 +1,9 @@
 import logging
-
 import speech_recognition
+
+from google.cloud import speech_v1p1beta1
+from google.cloud.speech_v1p1beta1 import enums
+from pydub import AudioSegment
 
 
 class SpeechRecognizer:
@@ -46,3 +49,32 @@ class SpeechRecognizer:
             except speech_recognition.RequestError as e:
                 logging.error(e)
                 return ""
+
+    @staticmethod
+    def parse_file_input(file):
+        client = speech_v1p1beta1.SpeechClient()
+        language_code = "pt-PT"
+
+        encoding = enums.RecognitionConfig.AudioEncoding.LINEAR16
+        config = {
+            "language_code": language_code,
+            "sample_rate_hertz": 44100,
+            "encoding": encoding
+        }
+
+        try:
+            mysound = AudioSegment.from_wav(file)
+            mysound = mysound.set_channels(1)
+            mysound = mysound.set_frame_rate(44100)
+
+            audio = {"content": mysound.raw_data}
+            logging.debug("Enviar para a Google...")
+            response = client.recognize(config, audio)
+            transcript = response.results[0].alternatives[0].transcript
+            logging.debug("Percebi: {}".format(transcript))
+
+            return transcript
+
+        except FileNotFoundError as e:
+            logging.error(e)
+            return ""
