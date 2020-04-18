@@ -1,8 +1,8 @@
 import logging
 from typing import Dict
 
-from src.Actions import FileToActionParser
-from src.Actions.Action import Action
+from src.actions import file_to_action_parser
+from src.actions.action import Action
 
 
 class ActionChangeHandler:
@@ -14,7 +14,7 @@ class ActionChangeHandler:
         self.actions = actions
 
     def new_action(self, event, action_name):
-        action: Action = FileToActionParser.parse_file(event.src_path, action_name)
+        action: Action = file_to_action_parser.parse_file(event.src_path, action_name)
 
         if action is not None:
             self.actions[action.name] = action
@@ -23,7 +23,7 @@ class ActionChangeHandler:
         self.actions.pop(action_name, None)
 
     def handle_action_change(self, event, action_name: str):
-        logging.debug("Action {}: {}".format(event.event_type, event.src_path))
+        logging.info("Action {}: {}".format(event.event_type, event.src_path))
 
         if event.event_type == "created":
             self.new_action(event, action_name)
@@ -37,7 +37,7 @@ class ActionChangeHandler:
         if event.is_directory:
             return
 
-        action_name = FileToActionParser.get_action_name(self.path, event.src_path)
+        action_name = file_to_action_parser.get_action_name(self.path, event.src_path)
 
         if action_name is None:
             return

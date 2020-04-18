@@ -1,6 +1,6 @@
 from pyext import RuntimeModule
 
-from src.Actions.ActionCallback import ActionCallback
+from src.actions.action_callback import ActionCallback
 
 
 class Action:

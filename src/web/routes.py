@@ -1,27 +1,29 @@
 import json
-import logging
-from typing import Dict
+
 from flask import request, Blueprint
-from src.ActionManager.ActionManager import ActionManager
-from src.Actions.Action import Action
-from src.Actions.Actions import Actions
-from src.Speech.SpeechRecognizer import SpeechRecognizer
+
+from src.action_manager.action_manager import ActionManager
+from src.speech.speech_recognizer import parse_file_input
 
 web_app = Blueprint('web_app', __name__)
+action_manager: ActionManager = ActionManager()
 
 
-@web_app.route("/voice", methods=['POST'])
+def build_response(value: dict, status: int):
+    return json.dumps(value), status, {'ContentType': 'application/json'}
+
+
+@web_app.errorhandler(Exception)
+def all_exception_handler(error: Exception):
+    return build_response({"error": str(error)}, 400)
+
+
+@web_app.route("/voice", methods=["POST"])
 def receive_audio_blob():
-    file = request.files['audio']
-    if file.filename == "":
-        return json.dumps({'error': "Missing file to transcript"}), 400, {'ContentType':'application/json'}
+    language = request.form.get("language", "pt-PT")
+    file = request.files["audio"]
 
-    actions: Dict[str, Action] = Actions().actions
-    action_manager: ActionManager = ActionManager(actions)
+    transcript = parse_file_input(file, language)
+    callback = action_manager.select_action(transcript)
 
-    try:
-        transcript = SpeechRecognizer.parse_file_input(file)
-        action_manager.select_and_execute_action(transcript)
-    except ValueError as e:
-        logging.error(e)
-        exit(1)
+    return build_response(callback, 200)
