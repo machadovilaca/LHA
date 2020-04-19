@@ -1,6 +1,6 @@
 import json
 
-from flask import request, Blueprint
+from flask import request, Blueprint, send_file
 
 from src.action_manager.action_manager import ActionManager
 from src.speech.speech_recognizer import parse_file_input
@@ -27,3 +27,8 @@ def receive_audio_blob():
     callback = action_manager.select_action(transcript)
 
     return build_response(callback, 200)
+
+
+@web_app.route('/demo/<string:file>')
+def demo(file):
+    return send_file('../demo/' + file)

@@ -12,6 +12,7 @@ pyext = "*"
 watchdog = "*"
 pyyaml = "*"
 scikit-learn = "*"
+flask_cors = "*"
 
 [requires]
 python_version = "3.7"
