@@ -1,4 +1,4 @@
-from src.Actions.Action import Action
+from src.actions.action import Action
 
 
 class ActionExecutor:
@@ -9,7 +9,7 @@ class ActionExecutor:
         self.action = action
         self.transcript = transcript
 
-    def execute_action(self):
+    def action_callback(self):
         request_body = {}
 
         if self.action.callback_arguments_parser is not None:
@@ -19,8 +19,8 @@ class ActionExecutor:
             for i in range(len(args_names)):
                 request_body[args_names[i]] = args_values[i]
 
-        print("{} request to {} with body {}".format(
-            self.action.callback.request,
-            self.action.callback.url,
-            request_body
-        ))
+        return {
+            "request": self.action.callback.request,
+            "url": self.action.callback.url,
+            "body": request_body
+        }

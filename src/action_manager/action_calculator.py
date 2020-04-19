@@ -4,7 +4,7 @@ from typing import Dict
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from src.Actions.Action import Action
+from src.actions.action import Action
 
 
 class ActionCalculator:
@@ -33,7 +33,7 @@ class ActionCalculator:
         similarities = cosine_similarity(train, test)
         closest_action = similarities.argsort(axis=None)[-1]
 
-        logging.debug("Similaridade: {} (mínimo: {})"
+        logging.info("Similaridade: {} (mínimo: {})"
                       .format(similarities[closest_action][0], self.threshold))
 
         if similarities[closest_action] >= self.threshold:

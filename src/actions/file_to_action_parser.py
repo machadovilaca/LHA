@@ -6,8 +6,8 @@ from typing import Dict
 import yaml
 from pyext import RuntimeModule
 
-from src.Actions.Action import Action
-from src.Actions.ActionCallback import ActionCallback
+from src.actions.action import Action
+from src.actions.action_callback import ActionCallback
 
 
 def validate_argument_parser(parser):
@@ -49,7 +49,7 @@ def yaml_to_action(data, action_name: str):
             get_callback_from_yaml(data),
             get_argument_parser_from_yaml(data)
         )
-        logging.debug("Action ({}) carregada com sucesso".format(action.name))
+        logging.info("Action ({}) carregada com sucesso".format(action.name))
         return action
     except (IndentationError, Exception) as e:
         logging.error("Action ({}) contém erros: {}".format(action_name, str(e)))

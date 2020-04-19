@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "e2ac6a67-f3e7-43ac-ac65-474233f43f5f",
+		"name": "LHA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /voice - SelectOptionAction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "language",
+							"value": "pt-PT",
+							"description": "Optional Parameter - defaults to pt-PT",
+							"type": "text"
+						},
+						{
+							"key": "audio",
+							"type": "file",
+							"src": "/Users/machadovilaca/Desktop/LHA/tst/seleciona_opcao.wav"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/voice",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"voice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /voice - No Action",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "language",
+							"value": "pt-PT",
+							"type": "text"
+						},
+						{
+							"key": "audio",
+							"type": "file",
+							"src": "/Users/machadovilaca/Desktop/LHA/tst/no_action.wav"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/voice",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"voice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /voice - Error",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "language",
+							"value": "pt-PT",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/voice",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"voice"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
