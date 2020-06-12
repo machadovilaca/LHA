@@ -6,8 +6,8 @@ from typing import Dict
 import yaml
 from pyext import RuntimeModule
 
-from src.actions.action import Action
-from src.actions.action_callback import ActionCallback
+from actions.action import Action
+from actions.action_callback import ActionCallback
 
 
 def validate_argument_parser(parser):

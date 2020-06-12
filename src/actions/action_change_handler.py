@@ -1,8 +1,8 @@
 import logging
 from typing import Dict
 
-from src.actions import file_to_action_parser
-from src.actions.action import Action
+from actions import file_to_action_parser
+from actions.action import Action
 
 
 class ActionChangeHandler:
