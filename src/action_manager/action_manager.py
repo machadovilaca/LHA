@@ -1,10 +1,10 @@
 import logging
 from typing import Dict
 
-from src.action_manager.action_calculator import ActionCalculator
-from src.action_manager.action_executor import ActionExecutor
-from src.actions.action import Action
-from src.actions.actions import Actions
+from action_manager.action_calculator import ActionCalculator
+from action_manager.action_executor import ActionExecutor
+from actions.action import Action
+from actions.actions import Actions
 
 
 class ActionManager:

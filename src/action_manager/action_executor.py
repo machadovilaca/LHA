@@ -1,4 +1,4 @@
-from src.actions.action import Action
+from actions.action import Action
 
 
 class ActionExecutor:
