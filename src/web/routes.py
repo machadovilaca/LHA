@@ -26,7 +26,7 @@ def receive_audio_blob():
     file = request.files["audio"]
 
     transcript = parse_file_input(file, language)
-    callback = action_manager.select_action(transcript)
+    callback = action_manager.select_action(transcript, language)
 
     return build_response(callback, 200)
 

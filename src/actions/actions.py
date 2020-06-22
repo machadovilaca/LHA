@@ -13,7 +13,7 @@ module_path = os.environ['MODULE_PATH']
 
 class Actions:
     path: str = module_path + "/src/actions/catalog"
-    actions: Dict[str, Action] = {}
+    actions: Dict[str, Dict[str, Action]] = {}
 
     def __init__(self):
         self.load_all_actions()

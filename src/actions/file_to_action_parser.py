@@ -9,6 +9,7 @@ from pyext import RuntimeModule
 from actions.action import Action
 from actions.action_callback import ActionCallback
 
+import os
 
 def validate_argument_parser(parser):
     valid_func_def_1 = re.compile(r'def( *)parse( *)\(( *)transcript( *):( *)str( *)\)( *):')
@@ -74,14 +75,19 @@ def parse_file(filename: str, action_name: str):
 
 
 def parse_dir(directory: str):
-    actions: Dict[str, Action] = {}
-    filenames: [str] = glob.glob(directory + "*.yaml")
+    actions: Dict[str, Dict[str, Action]] = {}
 
-    for filename in filenames:
-        action_name = get_action_name(directory, filename)
-        action = parse_file(filename, action_name)
+    languages: [str] = [ f.name for f in os.scandir(directory) if f.is_dir() ]
 
-        if action is not None:
-            actions[action_name] = action
+    for lan in languages:
+        logging.info("Loading " + lan)
+        filenames: [str] = glob.glob(directory + "/" + lan + "/" + "*.yaml")
+        actions[lan] = {}
+        for filename in filenames:
+            action_name = get_action_name(directory + "/" + lan + "/", filename)
+            action = parse_file(filename, action_name)
+
+            if action is not None:
+                actions[lan][action_name] = action
 
     return actions
