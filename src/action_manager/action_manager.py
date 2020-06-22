@@ -15,8 +15,8 @@ class ActionManager:
 
     def select_action(self, transcript, lang):
         if self.actions[lang] is None:
-            logging.error("Língua não suportada.")
-            raise ValueError('Língua não suportada.')
+            logging.error("Idioma não suportada.")
+            raise ValueError('Idioma não suportada.')
 
         action = ActionCalculator(self.actions[lang]).select_action_to_execute(transcript)
 

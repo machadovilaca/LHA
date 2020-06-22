@@ -19,9 +19,6 @@ After it, you must add it as an environment variable:
 
 GOOGLE_APPLICATION_CREDENTIALS=[PATH_TO_KEY]
 
-MODULE_PATH=[MODULE_PATH]
-
-
 ## Usage
 
 ```bash

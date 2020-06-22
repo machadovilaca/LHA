@@ -6,7 +6,6 @@ from flask import request, Blueprint, send_file
 from action_manager.action_manager import ActionManager
 from speech.speech_recognizer import parse_file_input
 
-path = os.environ['MODULE_PATH']
 web_app = Blueprint('web_app', __name__)
 action_manager: ActionManager = ActionManager()
 
@@ -33,4 +32,4 @@ def receive_audio_blob():
 
 @web_app.route('/demo/<string:file>')
 def demo(file):
-    return send_file(path + '/demo/' + file)
+    return send_file(os.getcwd() + '/demo/' + file)
