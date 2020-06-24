@@ -8,21 +8,20 @@ from actions.action import Action
 from actions.action_change_handler import ActionChangeHandler
 
 
-module_path = os.environ['MODULE_PATH']
-
-
 class Actions:
-    path: str = module_path + "/src/actions/catalog"
-    actions: Dict[str, Action] = {}
+    catalog_path: str = os.getcwd() + "/actions_catalog"
+    actions: Dict[str, Dict[str, Action]] = {}
 
     def __init__(self):
+        import os
+        print(os.getcwd())
         self.load_all_actions()
         self.listen_actions_changes()
 
     def load_all_actions(self):
-        self.actions = file_to_action_parser.parse_dir(self.path + "/")
+        self.actions = file_to_action_parser.parse_dir(self.catalog_path + "/")
 
     def listen_actions_changes(self):
         observer = Observer()
-        observer.schedule(ActionChangeHandler(self.path+ "/", self.actions), self.path)
+        observer.schedule(ActionChangeHandler(self.catalog_path+ "/", self.actions), self.catalog_path)
         observer.start()

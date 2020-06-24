@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "e2ac6a67-f3e7-43ac-ac65-474233f43f5f",
+		"_postman_id": "278c0d6a-0972-4e95-9274-c658ee81caf6",
 		"name": "LHA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "POST /voice - SelectOptionAction",
+			"name": "POST /voice - SelectOptionAction PT",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -22,7 +22,50 @@
 						{
 							"key": "audio",
 							"type": "file",
-							"src": "/Users/machadovilaca/Desktop/LHA/tst/seleciona_opcao.wav"
+							"src": "/home/msi-gtfo/repos/LHA/tst/seleciona_opcao.wav"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/voice",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"voice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /voice - SelectOptionAction EN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "language",
+							"value": "en-US",
+							"description": "Optional Parameter - defaults to pt-PT",
+							"type": "text"
+						},
+						{
+							"key": "audio",
+							"type": "file",
+							"src": "/home/msi-gtfo/repos/LHA/tst/seleciona_opcao_eng.wav"
 						}
 					],
 					"options": {

@@ -8,13 +8,17 @@ from actions.actions import Actions
 
 
 class ActionManager:
-    actions: Dict[str, Action]
+    actions: Dict[str, Dict[str, Action]]
 
     def __init__(self):
         self.actions = Actions().actions
 
-    def select_action(self, transcript):
-        action = ActionCalculator(self.actions).select_action_to_execute(transcript)
+    def select_action(self, transcript, lang):
+        if self.actions[lang] is None:
+            logging.error("Idioma não suportada.")
+            raise ValueError('Idioma não suportada.')
+
+        action = ActionCalculator(self.actions[lang]).select_action_to_execute(transcript)
 
         if action is None:
             logging.error("Não consigo executar a ação pedida.")
