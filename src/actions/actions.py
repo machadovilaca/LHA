@@ -9,12 +9,10 @@ from actions.action_change_handler import ActionChangeHandler
 
 
 class Actions:
-    catalog_path: str = os.getcwd() + "/actions_catalog"
+    catalog_path: str = os.path.join(os.path.dirname(__file__), "actions_catalog")
     actions: Dict[str, Dict[str, Action]] = {}
 
     def __init__(self):
-        import os
-        print(os.getcwd())
         self.load_all_actions()
         self.listen_actions_changes()
 
@@ -22,6 +20,7 @@ class Actions:
         self.actions = file_to_action_parser.parse_dir(self.catalog_path + "/")
 
     def listen_actions_changes(self):
+        print(self.catalog_path + "/")
         observer = Observer()
-        observer.schedule(ActionChangeHandler(self.catalog_path+ "/", self.actions), self.catalog_path)
+        observer.schedule(ActionChangeHandler(self.catalog_path + "/", self.actions), self.catalog_path, recursive=True)
         observer.start()
