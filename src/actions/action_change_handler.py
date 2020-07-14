@@ -7,7 +7,7 @@ from actions.action import Action
 
 class ActionChangeHandler:
     path: str
-    actions: Dict[str, Action]
+    actions: Dict[str, Dict[str, Action]]
 
     def __init__(self, path: str, actions: dict):
         self.path = path
@@ -15,12 +15,17 @@ class ActionChangeHandler:
 
     def new_action(self, event, action_name):
         action: Action = file_to_action_parser.parse_file(event.src_path, action_name)
+        lang = file_to_action_parser.get_lang_name(event.src_path)
+
+        if lang not in self.actions:
+            self.actions[lang] = {}
 
         if action is not None:
-            self.actions[action.name] = action
+            self.actions[lang][action.name] = action
 
-    def delete_action(self, action_name: str):
-        self.actions.pop(action_name, None)
+    def delete_action(self, event, action_name: str):
+        lang = file_to_action_parser.get_lang_name(event.src_path)
+        self.actions[lang].pop(action_name, None)
 
     def handle_action_change(self, event, action_name: str):
         logging.info("Action {}: {}".format(event.event_type, event.src_path))
@@ -28,10 +33,10 @@ class ActionChangeHandler:
         if event.event_type == "created":
             self.new_action(event, action_name)
         elif event.event_type == "modified":
-            self.delete_action(action_name)
+            self.delete_action(event, action_name)
             self.new_action(event, action_name)
         elif event.event_type == "deleted":
-            self.delete_action(action_name)
+            self.delete_action(event, action_name)
 
     def dispatch(self, event):
         if event.is_directory:

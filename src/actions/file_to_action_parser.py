@@ -65,6 +65,14 @@ def get_action_name(directory: str, filename: str):
 
     return match.group(1)
 
+def get_lang_name(directory: str):
+    match = re.search("[*a-z]{2}-[*A-Z]{2}", directory)
+
+    if not match:
+        logging.error("Bad language code: ({})".format(directory))
+        return None
+
+    return match.group(0)
 
 def parse_file(filename: str, action_name: str):
     with open(filename, 'r') as stream:
@@ -81,10 +89,11 @@ def parse_dir(directory: str):
 
     for lan in languages:
         logging.info("Loading " + lan)
-        filenames: [str] = glob.glob(directory + "/" + lan + "/" + "*.yaml")
+        tmp_dir = os.path.join(directory,lan)
+        filenames: [str] = glob.glob(tmp_dir + "/" + "*.yaml")
         actions[lan] = {}
         for filename in filenames:
-            action_name = get_action_name(directory + "/" + lan + "/", filename)
+            action_name = get_action_name(tmp_dir, filename)
             action = parse_file(filename, action_name)
 
             if action is not None:
