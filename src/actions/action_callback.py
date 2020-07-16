@@ -1,12 +1,11 @@
-from typing import List
+from typing import List, Dict
 
 
 class ActionCallback:
-    request: str
-    url: str
-    arguments: List[str]
+	params: Dict[str,str]
+	arguments: List[str]
 
-    def __init__(self, request: str, url: str, arguments: List[str]):
-        self.request = request
-        self.url = url
-        self.arguments = arguments
+	def __init__(self, params: Dict[str,str], arguments: List[str]):
+		_ = params.pop('arguments', None)
+		self.params = params
+		self.arguments = arguments

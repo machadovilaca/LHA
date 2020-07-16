@@ -20,7 +20,6 @@ class Actions:
         self.actions = file_to_action_parser.parse_dir(self.catalog_path + "/")
 
     def listen_actions_changes(self):
-        print(self.catalog_path + "/")
         observer = Observer()
         observer.schedule(ActionChangeHandler(self.catalog_path + "/", self.actions), self.catalog_path, recursive=True)
         observer.start()

@@ -39,7 +39,7 @@ def get_callback_from_yaml(data):
     callback = data['callback']
     arguments = callback.get('arguments', [])
 
-    return ActionCallback(callback['request'], callback['url'], arguments)
+    return ActionCallback(callback, arguments)
 
 
 def yaml_to_action(data, action_name: str):
