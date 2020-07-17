@@ -20,7 +20,6 @@ class ActionExecutor:
                 request_body[args_names[i]] = args_values[i]
 
         return {
-            "request": self.action.callback.request,
-            "url": self.action.callback.url,
+            "params": self.action.callback.params,
             "body": request_body
         }
